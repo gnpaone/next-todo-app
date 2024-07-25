@@ -1,0 +1,46 @@
+name: Build & deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build_and_deploy:
+    name: Build
+    runs-on: ubuntu-latest    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Install Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+    
+    - name: Install NPM packages
+      run: npm ci
+
+    - name: Create .env.local
+      run: |
+        touch .env.local
+        echo BASE_PATH=$BASE_PATH >> .env.local
+        echo NEXT_PUBLIC_BE_URL=$NEXT_PUBLIC_BE_URL >> .env.local
+        echo NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID >> .env.local
+      env:
+        BASE_PATH: ${{ secrets.BASE_PATH }}
+        NEXT_PUBLIC_BE_URL: ${{ secrets.NEXT_PUBLIC_BE_URL }}
+        NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
+    
+    - name: Build website
+      run: npm run build
+
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./out
