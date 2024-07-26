@@ -1,22 +1,13 @@
-"use client";
-
-import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/context/authContext";
+import { cookies } from "next/headers";
 
 const Hero = () => {
-	const { isAuthenticated, checkAuth } = useAuth();
-
-	useEffect(() => {
-		const authenticate = async () => {
-			if (!isAuthenticated) {
-				await checkAuth();
-			}
-		};
-		authenticate();
-	}, [isAuthenticated, checkAuth]);
+	const cookieStore = cookies();
+	const cookie = cookieStore.get("access-token");
+	const token = cookie ? cookie.value : null;
 
 	return (
 		<div className='min-h-[80vh] flex items-center justify-center'>
