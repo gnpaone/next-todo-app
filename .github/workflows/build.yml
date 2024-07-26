@@ -53,5 +53,4 @@ jobs:
       uses: planetoftheweb/copy-to-branches@v1
       env:
         key: master
-        branches: build
         files: vercel.json LICENSE .gitignore ./backend/* ./frontend/.next/*
