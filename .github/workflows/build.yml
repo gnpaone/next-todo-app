@@ -43,6 +43,12 @@ jobs:
       run: npm run build
       working-directory: ./frontend
 
+    - name: Safe files
+      run: |
+        git config --global --add safe.directory '*'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Copy To Branches Action
       uses: planetoftheweb/copy-to-branches@v1
       env:
