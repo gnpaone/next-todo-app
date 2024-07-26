@@ -1,23 +1,13 @@
-"use client";
-
-import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import LogoutButton from "@/components/logoutButton";
 import Bar from "@/app/todo/components/bar";
-import { useAuth } from "@/context/authContext";
+import { cookies } from "next/headers";
 
 const Navbar = () => {
-	const { isAuthenticated, checkAuth } = useAuth();
-
-	useEffect(() => {
-		const authenticate = async () => {
-			if (!isAuthenticated) {
-				await checkAuth();
-			}
-		};
-		authenticate();
-	}, [isAuthenticated, checkAuth]);
+	const cookieStore = cookies();
+	const cookie = cookieStore.get("access-token");
+	const token = cookie ? cookie.value : null;
 
 	return (
 		<div className='bg-blue-500/95'>
@@ -30,7 +20,7 @@ const Navbar = () => {
 						Todo
 					</Link>
 					<>
-						{isAuthenticated ? (
+						{token ? (
 							<div className='flex gap-4 items-center'>
 								<Bar />
 							</div>
