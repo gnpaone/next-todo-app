@@ -2,8 +2,8 @@
   "version": 2,
   "builds": [
     {
-      "src": "frontend/package.json",
-      "use": "@vercel/next"
+      "src": "frontend/.next/standalone/server.js",
+      "use": "@vercel/node"
     },
     {
       "src": "backend/index.js",
@@ -17,7 +17,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/$1"
+      "dest": "/frontend/.next/standalone/server.js"
     }
   ]
 }
