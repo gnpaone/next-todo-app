@@ -23,7 +23,7 @@ const Hero = () => {
 					</h1>
 
 					<div className='flex flex-col gap-2.5 sm:flex-row sm:justify-center lg:justify-start'>
-						{isAuthenticated ? (
+						{token ? (
 							<Button variant='hero' asChild>
 								<Link href='/todo'>Manage Your Todo</Link>
 							</Button>
