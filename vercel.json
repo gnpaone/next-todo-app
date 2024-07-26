@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "frontend/.next/standalone/server.js",
+      "src": "frontend/standalone/server.js",
       "use": "@vercel/node"
     },
     {
@@ -17,7 +17,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/.next/standalone/server.js"
+      "dest": "/frontend/standalone/server.js"
     }
   ]
 }
