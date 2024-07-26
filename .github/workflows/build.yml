@@ -43,14 +43,14 @@ jobs:
       run: npm run build
       working-directory: ./frontend
 
-    - name: Safe files
+    - name: Delete unnecessary files
       run: |
-        git config --global --add safe.directory /github/workspace
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        find . -mindepth 1 -maxdepth 1 ! -name '.next' -exec rm -rf {} +
+      working-directory: ./frontend
 
-    - name: Copy To Branches Action
-      uses: planetoftheweb/copy-to-branches@v1
-      env:
-        key: master
-        files: vercel.json LICENSE .gitignore ./backend/* ./frontend/.next/*
+    - name: Deploy to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: build
+        publish_dir: ./
