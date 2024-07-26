@@ -9,14 +9,27 @@ export const AuthProvider = ({ children }) => {
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const checkAuth = async () => {
-        const token = await getCookie("access-token");
-        setIsAuthenticated(!!token);
+        try {
+            const token = await getCookie("access-token");
+            console.log("Token retrieved:", token); // Log token value
+            setIsAuthenticated(!!token);
+        } catch (error) {
+            console.error("Error checking auth:", error); // Log errors
+        }
     };
 
 	const logout = async () => {
-		await deleteCookie();
-		setIsAuthenticated(false);
+		try {
+			await deleteCookie();
+			setIsAuthenticated(false);
+		} catch (error) {
+			console.error("Error logging out:", error); // Log errors
+		}
 	};
+
+	useEffect(() => {
+		checkAuth(); // Ensure auth check on mount
+	}, []);
 
 	return (
 		<AuthContext.Provider value={{ isAuthenticated, checkAuth, logout }}>
@@ -26,3 +39,4 @@ export const AuthProvider = ({ children }) => {
 };
 
 export const useAuth = () => useContext(AuthContext);
+
