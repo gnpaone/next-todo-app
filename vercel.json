@@ -12,13 +12,12 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
+      "src": "/api/v1/(.*)",
       "dest": "/backend/index.js"
     },
-    { "src": "/", "dest": "/frontend/$1" },
-    { "src": "/_not-found", "dest": "/frontend/$1" },
-    { "src": "/login", "dest": "/frontend/$1" },
-    { "src": "/sign-up", "dest": "/frontend/$1" },
-    { "src": "/todo", "dest": "/frontend/$1" }
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
+    }
   ]
 }
