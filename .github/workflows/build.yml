@@ -45,7 +45,7 @@ jobs:
 
     - name: Safe files
       run: |
-        git config --global --add safe.directory '*'
+        git config --global --add safe.directory /github/workspace
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
