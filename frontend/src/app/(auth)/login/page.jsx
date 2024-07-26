@@ -74,6 +74,7 @@ const Login = () => {
 			if (data.success) {
 				createCookie(data.data.token, data.data.user);
 				router.push("/");
+				router.refresh();
 				if (typeof window === 'undefined') {
 			        revalidatePath("/");
 			    }
